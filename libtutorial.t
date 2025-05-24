@@ -1,8 +1,10 @@
+-- import_start
 require "terralibext"
 local C = terralib.includec("stdlib.h")
 local utils = require("utils")
+-- import_end
 
-
+-- dynamic_stack_start
 local DynamicStack = terralib.memoize(function(T)
     local struct Stack {
         data : &T       -- Pointer to heap-allocated elements
@@ -74,8 +76,9 @@ local DynamicStack = terralib.memoize(function(T)
 
     return Stack
 end)
+-- dynamic_stack_end
 
-
+-- dynamic_vector_start
 local DynamicVector = terralib.memoize(function(T)
 
     local struct Vector {
@@ -137,7 +140,9 @@ local DynamicVector = terralib.memoize(function(T)
 
     return Vector
 end)
+-- dynamic_vector_end
 
+-- dynamic_vector_pair_start
 local DynamicVectorPair = terralib.memoize(function(T)
 
     local Vector = DynamicVector(T)
@@ -173,9 +178,12 @@ local DynamicVectorPair = terralib.memoize(function(T)
 
     return Pair
 end)
+-- dynamic_vector_pair_end
 
+-- export_start
 return {
     DynamicStack = DynamicStack,
     DynamicVector = DynamicVector,
     DynamicVectorPair = DynamicVectorPair
 }
+-- export_end
